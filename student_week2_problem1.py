@@ -1,29 +1,29 @@
 class Node:
     def __init__(self, data):
-        # Node stores data and a pointer to the next node.
         self.data = data
         self.next = None
 
 class NameList:
     def __init__(self):
-        # In a circular linked list, if front is None, the list is empty.
-        # Managing a back pointer helps with efficient insertions.
         self.front = None
         self.back = None
+        self.cursor = None
 
     def insert(self, data):
+        self.cursor = self.back
         new_node = Node(data)
-        if self.front is None:
-            # If the list is empty, the new node becomes front and back,
-            # and points to itself.
+        if not self.cursor:
+            self.cursor = new_node
             self.front = new_node
             self.back = new_node
-            new_node.next = new_node
-        else:
-            # Insert the new node after the back and update the back pointer.
-            new_node.next = self.front
-            self.back.next = new_node
-            self.back = new_node
+            self.cursor.next = self.cursor
+            return
+
+        new_node.next = self.cursor.next
+        self.cursor.next = new_node
+        if self.cursor == self.back:
+            self.back = self.cursor.next
+        return
 
     def removeDuplicates(self):
         if not self.front:
@@ -45,19 +45,19 @@ class NameList:
             x = x.next
             if x == self.front:
                 break
+        return
 
     def display(self):
-        if self.front is None:
+        if not self.cursor:
             print("empty")
             return
-        result = []
-        current = self.front
-        result.append(current.data)
-        current = current.next
-        while current != self.front:
-            result.append(current.data)
-            current = current.next
-        print(" ".join(result))
+        print(self.front.data, end=' ')
+        tmp = self.front.next
+        while tmp != self.front:
+            print(tmp.data, end=' ')
+            tmp = tmp.next
+        print()
+        return
 
 def main():
     name_list1 = NameList()

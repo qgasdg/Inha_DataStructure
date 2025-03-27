@@ -1,6 +1,7 @@
 import array
 class Node:
-    
+    def __init__(self):
+        self.data =
 
 class Stack:
     '''=======Student's code======='''
