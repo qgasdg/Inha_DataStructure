@@ -33,10 +33,10 @@ class NameList:
         while True:
             prev = x
             it = x.next
-            # Traverse one cycle starting from x, removing duplicates of x.data.
+            # x 기준으로 한 바퀴 돌면서 중복 제거
             while it != self.front:
                 if it.data == x.data:
-                    # If a duplicate is found, remove it by skipping it.
+                    # 중복이면 삭제: prev는 그대로두고 it를 건너뛰기
                     prev.next = it.next
                     it = prev.next
                 else:
