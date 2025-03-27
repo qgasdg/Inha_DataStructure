@@ -25,43 +25,26 @@ class NameList:
             self.back = self.cursor.next
         return
 
-    def delete(self):
-        if not self.cursor:
-            return
-
-        if self.cursor == self.front and self.cursor == self.back:
-            self.front = None
-            self.back = None
-            self.cursor = None
-            return
-
-        tmp = self.cursor.next # tmp == element that needs to be deleted
-        self.cursor.next = tmp.next
-        if tmp == self.front:
-            self.front = tmp.next
-            return
-        if tmp == self.back:
-            self.back = self.cursor
-            return
-
     def removeDuplicates(self):
-        if not self.cursor:
+        if not self.front:
             return
 
-        tmp = self.front
-        it = tmp
-
-        while tmp.next != self.front:
-            name = tmp.data
-            it = tmp
-            while it.next != self.front:
-                if it.next.data == name:
-                    self.cursor = it
-                    self.delete()
-                    if it.next == self.front: # execption case: back을 지우는 경우.
-                        break
-                it = it.next
-            tmp = tmp.next
+        x = self.front
+        while True:
+            prev = x
+            it = x.next
+            # x 기준으로 한 바퀴 돌면서 중복 제거
+            while it != self.front:
+                if it.data == x.data:
+                    # 중복이면 삭제: prev는 그대로두고 it를 건너뛰기
+                    prev.next = it.next
+                    it = prev.next
+                else:
+                    prev = it
+                    it = it.next
+            x = x.next
+            if x == self.front:
+                break
         return
 
     def display(self):
