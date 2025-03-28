@@ -42,10 +42,8 @@ class NameList:
         new_node.next = self.cursor.next
         # cursor의 next를 새 노드로 연결 (즉, 뒤에 새 노드 삽입)
         self.cursor.next = new_node
-
-        # 만약 cursor가 리스트의 마지막 노드였다면, 새 노드가 새로운 마지막 노드가 된다.
-        if self.cursor == self.back:
-            self.back = self.cursor.next
+        # 새 노드가 새로운 마지막 노드가 된다.
+        self.back = self.cursor.next
         return
 
     def removeDuplicates(self):
@@ -55,14 +53,14 @@ class NameList:
         if not self.front:
             return  # 리스트가 비어 있다면 아무 작업도 하지 않음
 
-        # x: 기준이 되는 노드 (각 노드의 데이터와 리스트 내 다른 모든 노드를 비교)
-        x = self.front
+        # self.cursor: 기준이 되는 노드 (각 노드의 데이터와 리스트 내 다른 모든 노드를 비교)
+        self.cursor = self.front
         while True:
-            prev = x  # prev: 비교 도중 현재 순회 중인 노드의 이전 노드
-            it = x.next  # it: x 다음 노드부터 한 바퀴 돌아가면서 비교
-            # x 기준으로 한 바퀴 순회하면서 x.data와 동일한 데이터를 가진 노드를 제거
+            prev = self.cursor  # := previous - 비교 도중 현재 순회 중인 노드의 이전 노드
+            it = self.cursor.next  # := iterator - self.cursor 다음 노드부터 한 바퀴 돌아가면서 비교
+            # self.cursor 기준으로 한 바퀴 순회하면서 self.cursor.data와 동일한 데이터를 가진 노드를 제거
             while it != self.front:
-                if it.data == x.data:
+                if it.data == self.cursor.data:
                     # 중복 발견: prev.next를 it.next로 연결하여 it를 리스트에서 제거
                     prev.next = it.next
                     # it를 업데이트 (삭제한 후, prev의 다음 노드가 새로운 it)
@@ -71,10 +69,10 @@ class NameList:
                     # 중복이 아니면, prev와 it를 한 칸씩 이동
                     prev = it
                     it = it.next
-            # x를 다음 노드로 이동하여, 리스트 내 모든 노드에 대해 중복 제거 수행
-            x = x.next
+            # self.cursor를 다음 노드로 이동하여, 리스트 내 모든 노드에 대해 중복 제거 수행
+            self.cursor = self.cursor.next
             # 한 바퀴 돌면(다시 front에 도달하면) 중복 제거 작업 종료
-            if x == self.front:
+            if self.cursor == self.front:
                 break
         return
 
