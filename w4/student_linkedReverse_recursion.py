@@ -29,7 +29,11 @@ class LinkedList: # Linked list class
         print('None')
 
     def reverse_recursive(self, current, prev): 
-        '''=======Student's code======='''
+        if not current:
+            return prev
+        nxt = current.next
+        current.next = prev
+        return self.reverse_recursive(nxt, current)
 
     def reverse(self):  # Reverse the linked list
         # If there is no node or only one node in the linked list

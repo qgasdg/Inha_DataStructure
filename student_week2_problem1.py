@@ -1,6 +1,5 @@
 import array
 
-
 # Node 클래스: 각 노드는 데이터를 저장하고 다음 노드를 가리키는 포인터를 가진다.
 class Node:
     def __init__(self, data):

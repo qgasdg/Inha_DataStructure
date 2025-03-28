@@ -5,10 +5,9 @@ class Fibonacci:
         return self.recursive(n - 1) + self.recursive(n - 2)
 
     def iterative(self, n):
-        ret = 1
-        prev = 1
+        ret, prev = 1, 1
         for i in range(n - 1):
-            ret, prev = ret + prev, ret
+            ret, prev = ret + prev, ret         
         return ret
     
     def linear_recursive(self, n):
