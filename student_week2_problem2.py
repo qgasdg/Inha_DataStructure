@@ -1,62 +1,85 @@
 import array
 
-
+# Node 클래스: 각 노드는 정수형 배열(크기 3)과 다음 노드를 가리키는 포인터를 가짐.
 class Node:
-    def __init__(self):
+    def __init__(self, data=None):
+        # 'h' 타입의 array를 생성하여 3개의 정수를 저장 (초기값 0)
         self.data = array.array('h', [0] * 3)
-        self.next = None
+        self.next = None  # 다음 노드의 포인터
 
-
+# DynamicArray 클래스: 각 노드가 3개의 정수를 저장하는 환형 연결 리스트를 이용해 동적 배열처럼 동작.
 class DynamicArray:
     def __init__(self):
-        self.capacity = 0
-        self.size = 0
-        self.head = None
-        self.tail = None
+        self.capacity = 0  # 전체 노드에 저장 가능한 총 원소 개수 (노드 수 * 3)
+        self.size = 0      # 현재 저장된 원소의 개수
+        self.head = None   # 연결 리스트의 첫 번째 노드
+        self.tail = None   # 연결 리스트의 마지막 노드
 
     def add(self, idx, item):
+        """
+        add(idx, item): 주어진 인덱스(idx) 위치에 item을 삽입하고,
+        이후의 원소들을 한 칸씩 뒤로 밀어낸다.
+        idx는 0 <= idx <= size 의 범위 내에 있다고 가정.
+        """
+        # 리스트가 비어 있는 경우: 첫 노드를 생성
         if not self.head:
-            self.capacity += 3
-            self.size += 1
+            self.capacity += 3       # 새 노드 하나당 3개의 원소 저장 가능
+            self.size += 1           # 첫 원소 추가
             new_node = Node()
             self.head = new_node
             self.tail = new_node
+            # 첫 노드의 배열에 idx 위치에 item을 저장 (일반적으로 idx는 0)
             new_node.data[idx] = item
             return
 
+        # 만약 현재 저장된 원소 수와 capacity가 같다면, 새 노드 추가 (즉, 현재 노드가 꽉 찼다면)
         if self.size == self.capacity:
             self.capacity += 3
             new_node = Node()
+            # 현재 tail 뒤에 새 노드를 연결하고 tail 갱신
             self.tail.next = new_node
             self.tail = new_node
 
+        # 삽입할 위치(idx)에 해당하는 노드와 배열 내 오프셋을 찾는다.
         tmp = self.head
         i = 0
+        # idx만큼 이동하며 적절한 노드와 배열 인덱스 결정
         for _ in range(idx):
             i += 1
-            if i > 2:
+            if i > 2:  # 한 노드 내 인덱스는 0~2 까지 존재하므로,
                 i = 0
-                tmp = tmp.next
+                tmp = tmp.next  # 다음 노드로 이동
 
+        # targ: 원래 삽입 위치에 해당하는 노드 (나중에 이 위치에 새로운 item을 삽입할 예정)
         targ = tmp
+        # 현재 위치의 값을 carry 변수에 저장 (이후 shift 연산 시 사용)
         carry = tmp.data[i]
 
-        # Now loop over how many times you need to shift
+        # idx부터 현재 size-1까지, 즉 삽입 위치부터 마지막 원소까지 한 칸씩 오른쪽으로 이동(shift)
         for _ in range(idx, self.size):
-            # SHIFT LOGIC, updating i each time
+            # 현재 노드 내에서 i가 2보다 작으면 같은 노드 내에서 shift
             if i < 2:
-                # shift within the same node
+                # 오른쪽으로 한 칸 이동: 현재 위치의 값은 carry로 덮어쓰고, 기존 값은 carry에 저장
                 tmp.data[i + 1], carry = carry, tmp.data[i + 1]
                 i += 1
             else:
+                # 현재 노드의 마지막 위치(인덱스 2)까지 shift한 후,
+                # 다음 노드로 넘어가서 그 노드의 첫 번째 원소와 shift 수행
                 tmp = tmp.next
                 tmp.data[0], carry = carry, tmp.data[0]
                 i = 0
+
+        # targ 노드의 idx 위치에 새 item을 삽입
         targ.data[idx % 3] = item
-        self.size += 1
+        self.size += 1  # 전체 원소 수 증가
         return
 
     def remove(self, idx):
+        """
+        remove(idx): 주어진 인덱스(idx)에 있는 원소를 제거하고,
+        이후의 원소들을 한 칸씩 앞으로 당긴다.
+        """
+        # idx에 해당하는 노드와 배열 내 인덱스를 찾기 위해 front부터 탐색
         tmp = self.head
         i = 0
         for _ in range(idx):
@@ -65,41 +88,51 @@ class DynamicArray:
                 i = 0
                 tmp = tmp.next
 
+        # idx부터 마지막 원소까지, 한 칸씩 왼쪽으로 shift
         for _ in range(idx, self.size):
             if i < 2:
+                # 같은 노드 내에서 왼쪽 shift: 현재 인덱스 i를 i+1의 값으로 덮어씀
                 tmp.data[i] = tmp.data[i + 1]
                 i += 1
-                # print(i)
-                # print(*tmp.data)
             else:
+                # 현재 노드의 마지막 인덱스(2)에서는, 다음 노드의 첫 번째 원소를 가져와서 채운 후,
+                # 다음 노드로 넘어가서 shift 진행
                 tmp.data[2] = tmp.next.data[0]
-                # print(*tmp.data)
                 tmp = tmp.next
                 i = 0
 
-        self.size -= 1
+        self.size -= 1  # 전체 원소 수 감소
+
+        # 만약 제거 후 남은 원소의 개수가 정확히 capacity의 배수가 아니면, 마지막 노드가 비어있을 수 있음.
         if self.size % 3 == 0:
             self.capacity -= 3
             curr = self.head
+            # 마지막 노드를 찾아 tail을 갱신 (마지막 노드는 curr.next가 None이 되어야 함)
             while curr.next:
                 curr = curr.next
             self.tail = curr
             self.tail.next = None
+        return
 
     def print(self):
+        """
+        print(): 현재 동적 배열에 저장된 모든 원소를 순서대로 출력.
+        """
         tmp = self.head
         i = 0
+        # 전체 원소 개수만큼 반복하면서 출력
         for _ in range(self.size):
             if i > 2:
                 i = 0
                 tmp = tmp.next
             print(tmp.data[i], end=' ')
             i += 1
-        print()
+        print()  # 줄바꿈
+        return
 
 def main():
+    # 첫 번째 테스트: 10장의 카드(숫자)를 순차적으로 추가하고 출력
     arr_list = DynamicArray()
-
     arr_list.add(0, 1)
     arr_list.add(1, 2)
     arr_list.add(2, 3)
@@ -110,20 +143,23 @@ def main():
     arr_list.add(7, 8)
     arr_list.add(8, 9)
     arr_list.add(9, 10)
-    arr_list.print()  # 1 2 3 4 5 6 7 8 9 10
+    arr_list.print()  # 예상 출력: 1 2 3 4 5 6 7 8 9 10
 
+    # 두 번째 테스트: 인덱스 5 위치에 99 삽입
     arr_list.add(5, 99)
-    arr_list.print()  # 1 2 3 4 5 99 6 7 8 9 10
+    arr_list.print()  # 예상 출력: 1 2 3 4 5 99 6 7 8 9 10
 
+    # 세 번째 테스트: 인덱스 0의 원소 제거
     arr_list.remove(0)
-    arr_list.print()  # 2 3 4 5 99 6 7 8 9 10
+    arr_list.print()  # 예상 출력: 2 3 4 5 99 6 7 8 9 10
 
+    # 네 번째 테스트: 인덱스 9의 원소 제거
     arr_list.remove(9)
-    arr_list.print()  # 2 3 4 5 99 6 7 8 9
+    arr_list.print()  # 예상 출력: 2 3 4 5 99 6 7 8 9
 
+    # 다섯 번째 테스트: 인덱스 4의 원소 제거
     arr_list.remove(4)
-    arr_list.print()  # 2 3 4 5 6 7 8 9
-
+    arr_list.print()  # 예상 출력: 2 3 4 5 6 7 8 9
 
 if __name__ == '__main__':
     main()
