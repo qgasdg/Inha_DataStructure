@@ -1,10 +1,15 @@
 
 class Factorial:
     def recursive(self, n):
-        '''=======Student's code======='''
+        if n == 0:
+            return 1
+        return self.recursive(n - 1) * n
     
     def iterative(self, n):
-        '''=======Student's code======='''
+        ret = 1
+        for i in range(1, n + 1):
+            ret *= i
+        return ret
     
 def main():
     factorial = Factorial()
