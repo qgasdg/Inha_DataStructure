@@ -7,11 +7,13 @@ class Node: # Tree Node class
 
     def setLeft(self, left):
         self.left = left
-        left.parent = self
+        if left is not None:
+            left.parent = self
     
     def setRight(self, right):
         self.right = right
-        right.parent = self
+        if right is not None:
+            right.parent = self
 
 def is_leaf(root):
     return root.left is None and root.right is None
@@ -30,9 +32,7 @@ def height(position):
             return height_right + 1
 
 def is_root(node):
-    if not node.parent:
-        return True
-    return False
+    return node.parent is None
 
 def depth(node):
     if not node.parent:

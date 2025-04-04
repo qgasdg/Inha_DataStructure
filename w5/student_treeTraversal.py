@@ -1,16 +1,27 @@
 class Node: # Tree Node class
     def __init__(self, data):
-        '''=======Student's code======='''
+        self.data = data
+        self.left = None
+        self.right = None
 
 
-def PreorderTraversal(root): 
-    '''=======Student's code======='''
+def PreorderTraversal(root): # subtree의 root를 의미함.
+    if root:
+        print(root.data, end=' ')
+        PreorderTraversal(root.left)
+        PreorderTraversal(root.right)
 
 def InorderTraversal(root):
-    '''=======Student's code======='''
+    if root:
+        InorderTraversal(root.left)
+        print(root.data, end=' ')
+        InorderTraversal(root.right)
 
 def PostorderTraversal(root):
-    '''=======Student's code======='''
+    if root:
+        PostorderTraversal(root.left)
+        PostorderTraversal(root.right)
+        print(root.data, end=' ')
 
 def main():
     # Create a binary tree

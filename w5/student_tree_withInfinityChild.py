@@ -1,15 +1,42 @@
 class Node:
     def __init__(self, value):
-        '''=======Student's code======='''
-    
+        self.value = value
+        self.childrenHead = None
+        self.childrenTail = None
+        self.next = None
+
     def addChild(self, value):
-        '''=======Student's code======='''
+        new_node = Node(value)
+        if self.childrenHead is None:
+            self.childrenHead = new_node
+            self.childrenTail = new_node
+            return
+        self.childrenTail.next = new_node
+        self.childrenTail = new_node
+        """ # not using tail
+        tmp = self.childrenHead
+        while tmp.next:
+            tmp = tmp.next
+        tmp.next = new_node
+        self.childrenTail = new_node
+        return
+        """
 
 def preOrderTraversal(root): 
-    '''=======Student's code======='''
+    if root:
+        print(root.value, end=' ')
+        tmp = root.childrenHead
+        while tmp:
+            preOrderTraversal(tmp)
+            tmp = tmp.next
 
 def postOrderTraversal(root):
-    '''=======Student's code======='''
+    if root:
+        tmp = root.childrenHead
+        while tmp:
+            postOrderTraversal(tmp)
+            tmp = tmp.next
+        print(root.value, end=' ')
 
 def main():
     # Create a tree
