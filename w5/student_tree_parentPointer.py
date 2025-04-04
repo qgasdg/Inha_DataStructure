@@ -1,24 +1,43 @@
 class Node: # Tree Node class
     def __init__(self, data):
-        '''=======Student's code======='''
+        self.data = data
+        self.parent = None
+        self.left = None
+        self.right = None
 
     def setLeft(self, left):
-        '''=======Student's code======='''
+        self.left = left
+        left.parent = self
     
     def setRight(self, right):
-        '''=======Student's code======='''
+        self.right = right
+        right.parent = self
 
 def is_leaf(root):
-    '''=======Student's code======='''
+    return root.left is None and root.right is None
 
 def height(position):
-    '''=======Student's code======='''
+    if position is None:
+        return -1
+    if is_leaf(position):
+        return 0
+    else:
+        height_left = height(position.left)
+        height_right = height(position.right)
+        if height_left > height_right:
+            return height_left + 1
+        else:
+            return height_right + 1
 
 def is_root(node):
-    '''=======Student's code======='''
+    if not node.parent:
+        return True
+    return False
 
 def depth(node):
-    '''=======Student's code======='''
+    if not node.parent:
+        return 0
+    return depth(node.parent) + 1
         
 
 def main():
