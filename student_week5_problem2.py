@@ -3,17 +3,29 @@ class Node:
         self.data = value
         self.leftChild = None
         self.rightChild = None
+    
+    def is_leaf(self):
+        return (self.leftChild == None and self.rightChild == None)
 
 max_sum = 0
 
 def maxPathSum(node):
     global max_sum
+    if node.is_leaf():
+        return node.data
     
-    node.
+    left_max = maxPathSum(node.leftChild)
+    right_max = maxPathSum(node.rightChild)
+    
+    if left_max+node.data+right_max > max_sum:
+        max_sum = left_max+node.data+right_max
+    
+    return max(left_max,right_max)+node.data
 
 def findMaxPathSum(root):
     global max_sum
-    '''=======Student's code======='''
+    maxPathSum(root)
+    return max_sum
 
 def main():
     #         1
