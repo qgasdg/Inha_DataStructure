@@ -20,9 +20,10 @@ class NameList:
     def insert(self, data):
         # insert(data): 연결 리스트의 마지막에 새로운 데이터를 삽입하는 메소드.
         # 새 노드를 만들고, 이를 환형 연결 리스트에 추가한다.
-
+        """
         # 삽입 전에 cursor를 현재 마지막 노드(back)로 지정
         self.cursor = self.back
+        """
 
         # 새 노드 생성
         new_node = Node(data)
@@ -82,7 +83,7 @@ class NameList:
 
     def display(self):
         # display(): 연결 리스트의 모든 데이터를 순서대로 출력하는 메소드.
-        if not self.cursor:
+        if self.cursor is None:
             print("empty")
             return
         # front 노드의 데이터를 출력

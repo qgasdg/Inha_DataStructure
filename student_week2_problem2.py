@@ -22,7 +22,7 @@ class DynamicArray:
         idx는 0 <= idx <= size 의 범위 내에 있다고 가정.
         """
         # 리스트가 비어 있는 경우: 첫 노드를 생성
-        if not self.head:
+        if self.head is None:
             self.capacity += 3       # 새 노드 하나당 3개의 원소 저장 가능
             self.size += 1           # 첫 원소 추가
             new_node = Node()
