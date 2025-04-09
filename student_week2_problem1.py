@@ -36,7 +36,7 @@ class NameList:
             # 단일 노드의 경우, 자신의 다음 노드로 자신을 가리켜 환형 구조를 유지
             self.cursor.next = self.cursor
             return
-
+        """
         # 일반적인 경우: 새 노드를 cursor(현재 back)의 뒤에 삽입한다.
         # 새 노드의 next는 cursor의 next(즉, front)를 가리킴
         new_node.next = self.cursor.next
@@ -44,6 +44,10 @@ class NameList:
         self.cursor.next = new_node
         # 새 노드가 새로운 마지막 노드가 된다.
         self.back = self.cursor.next
+        """
+        new_node.next = self.front
+        self.back.next = new_node
+        self.back = new_node
         return
 
     def removeDuplicates(self):
