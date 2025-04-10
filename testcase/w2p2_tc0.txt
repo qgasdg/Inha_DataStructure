@@ -7,3 +7,5 @@
     a.print() # 0 0 1
     a.add(1, 2)
     a.print() # 0 2 1
+    a.remove(1)
+    a.print() # 0 1
