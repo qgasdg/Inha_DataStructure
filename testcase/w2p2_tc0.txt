@@ -1,0 +1,9 @@
+    a = DynamicArray()
+    a.add(2, 1)
+    a.print() # 0 0 1
+    a.add(3, 2)
+    a.print() # 0 0 1 2
+    a.remove(3)
+    a.print() # 0 0 1
+    a.add(1, 2)
+    a.print() # 0 2 1
