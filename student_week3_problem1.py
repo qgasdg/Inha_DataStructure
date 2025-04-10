@@ -1,5 +1,3 @@
-import array
-
 # Node 클래스: 스택의 노드로, data에 저장할 값을 담고 다음 노드를 가리키는 next 포인터를 가짐.
 class Node:
     def __init__(self, data):
