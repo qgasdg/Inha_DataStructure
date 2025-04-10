@@ -89,7 +89,7 @@ class DynamicArray:
                 tmp = tmp.next
 
         # idx부터 마지막 원소까지, 한 칸씩 왼쪽으로 shift
-        for _ in range(idx, self.size):
+        for _ in range(idx, self.size - 1):
             if i < 2:
                 # 같은 노드 내에서 왼쪽 shift: 현재 인덱스 i를 i+1의 값으로 덮어씀
                 tmp.data[i] = tmp.data[i + 1]
@@ -103,12 +103,14 @@ class DynamicArray:
 
         self.size -= 1  # 전체 원소 수 감소
 
-        # 만약 제거 후 남은 원소의 개수가 정확히 capacity의 배수가 아니면, 마지막 노드가 비어있을 수 있음.
+        # 만약 제거 후 남은 원소의 개수가 정확히 3의 배수라면, 마지막 노드가 비어있음.
         if self.size % 3 == 0:
             self.capacity -= 3
             curr = self.head
-            # 마지막 노드를 찾아 tail을 갱신 (마지막 노드는 curr.next가 None이 되어야 함)
-            while curr.next:
+            # 마지막 노드의 직전 노드를 찾아 tail을 갱신
+            while True:
+                if curr.next == self.tail:
+                    break
                 curr = curr.next
             self.tail = curr
             self.tail.next = None
