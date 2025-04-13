@@ -1,6 +1,3 @@
-import array
-
-
 class Node:
     def __init__(self, value):
         self.data = value
@@ -10,6 +7,22 @@ class Node:
     def is_leaf(self):
         return self.leftChild is None and self.rightChild is None
 
+def InorderLeafTraversal(root):
+    if root.is_leaf():
+        print(root.data, end=' ')
+        return
+    if root.leftChild is not None:
+        InorderLeafTraversal(root.leftChild)
+    if root.rightChild is not None:
+        InorderLeafTraversal(root.rightChild)
+    return
+
+def rightChildTraversal(root):
+    if root.is_leaf():
+        return
+    rightChildTraversal(root.rightChild)
+    print(root.data, end=' ')
+    return
 
 def boundaryTraversal(root):
     temp_boundary = root
@@ -21,20 +34,9 @@ def boundaryTraversal(root):
     InorderLeafTraversal(root)
 
     temp_boundary = root.rightChild
-    while not temp_boundary.is_leaf():
-        print(temp_boundary.data, end=' ')
-        temp_boundary = temp_boundary.rightChild
-
-
-def InorderLeafTraversal(root):
-    if root.is_leaf():
-        print(root.data, end=' ')
-
-    if root.leftChild is not None:
-        InorderLeafTraversal(root.leftChild)
-    if root.rightChild is not None:
-        InorderLeafTraversal(root.rightChild)
-
+    rightChildTraversal(temp_boundary)
+    print()
+    return
 
 def main():
     #        20
@@ -55,6 +57,17 @@ def main():
 
     boundaryTraversal(root)  # 20 8 4 10 14 25 22
 
+    #        20
+    #       /  \
+    #      8    22
+    #     / \     \
+    #    4   12    25
+    #       /  \    \
+    #      10   14   23
+
+    root.rightChild.rightChild.rightChild = Node(23)
+
+    boundaryTraversal(root)  # 20 8 4 10 14 23 25 22
 
 if __name__ == "__main__":
     main()
