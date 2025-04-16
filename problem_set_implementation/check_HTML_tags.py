@@ -43,7 +43,30 @@ class Stack:
 
 with open("problem_set_implementation\HTML.txt", "r") as file:
     lines = file.readlines()
-    lines = [line.strip().split() for line in lines if line.strip()]
+    lines = [line.strip() for line in lines if line.strip()]
+    processed_lines = []
+    for line in lines:
+        temp = []
+        i = 0
+        while i < len(line):
+            if line[i] == '<':
+                tag = ''
+                while i < len(line) and line[i] != '>':
+                    tag += line[i]
+                    i += 1
+                tag += '>'
+                temp.append(tag)
+                i += 1
+            else:
+                word = ''
+                while i < len(line) and line[i] != '<':
+                    word += line[i]
+                    i += 1
+                if word.strip():
+                    temp.append(word.strip())
+        processed_lines.append(temp)
+    lines = processed_lines
+    
     opening_tags = Stack()
     for line in lines:
         for tag in line:
@@ -56,11 +79,14 @@ with open("problem_set_implementation\HTML.txt", "r") as file:
                 else:
                     opening_tag = opening_tags.pop()
                     check = True
-                    for i in range(1, len(opening_tag)):
+                    for i in range(1, len(tag) - 2):
                         if opening_tag[i] != tag[i + 1]:
                             print("HTML is not well-formed")
                             check = False
                             break
+                    if opening_tag[-1] != '>' or tag[-1] != '>':
+                        print("HTML is not well-formed")
+                        check = False
                     if check:
                         print(f"Matched: {opening_tag} and {tag}")
                     
