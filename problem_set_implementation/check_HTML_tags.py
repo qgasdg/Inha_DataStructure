@@ -79,8 +79,8 @@ with open("problem_set_implementation\HTML.txt", "r") as file:
                 else:
                     opening_tag = opening_tags.pop()
                     check = True
-                    for i in range(1, len(tag) - 2):
-                        if opening_tag[i] != tag[i + 1]:
+                    for i in range(2, len(tag) - 1):
+                        if tag[i] != opening_tag[i - 1]:
                             print("HTML is not well-formed")
                             check = False
                             break
