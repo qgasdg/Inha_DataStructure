@@ -37,7 +37,7 @@ class Stack:
         print()
         return
 
-n = 4
+n = 3
 stack = Stack()
 visited = array.array('h', [0] * 10)
 def permutations(num):
