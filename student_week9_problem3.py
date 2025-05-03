@@ -34,22 +34,22 @@ class MergeLinkedList:
             cur = self.head
             cur2 = head2.next
 
-        tmp_head = min_head
+        tmp = min_head
 
         while cur and cur2:
             if cur.data <= cur2.data:
-                tmp_head.next = cur
+                tmp.next = cur
                 cur = cur.next
             else:
-                tmp_head.next = cur2
+                tmp.next = cur2
                 cur2 = cur2.next
-            tmp_head = tmp_head.next
+            tmp = tmp.next
 
-        # Attach any remaining element           
+        # Attach any remaining element
         if cur:
-            tmp_head.next = cur
+            tmp.next = cur
         else:
-            tmp_head.next = cur2
+            tmp.next = cur2
 
         self.head = min_head
 
