@@ -38,6 +38,15 @@ def main():
     #     / \   / \
     #    8  -1  4  -5
 
+    """
+    4개 중 2개 뽑기
+    8 -2 -1 = 5
+    8 -2 1 3 4 = 14 => 최대!
+    8 -2 1 3 -5 = 5
+    -1 -2 1 3 4 = 5
+    -1 -2 1 3 -5 = -4
+    4 3 -5 = 2
+    """
     root = Node(1)
     root.leftChild = Node(-2)
     root.rightChild = Node(3)
@@ -48,7 +57,7 @@ def main():
 
     print(findMaxPathSum(root))
 
-    # Output: 14 (1 + -2 + 3 + 4)
+    # Output: 14 (8 + -2 + 1 + 3 + 4)
 
 
 if __name__ == "__main__":
