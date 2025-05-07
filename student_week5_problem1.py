@@ -51,28 +51,20 @@ def boundaryTraversal(root):
     if root is None:
         return
     tmp = root
-    while not isLeaf(tmp):
+    while tmp.leftChild:
         print(tmp.value, end=' ')
-        if tmp.leftChild:
-            tmp = tmp.leftChild
-        else: # not isLeaf이기 때문에 LC가 없으면 RC는 무조건 존재
-            tmp = tmp.rightChild
+        tmp = tmp.leftChild
     # 위는 왼쪽 boundary
     printLeaves(root) # 리프 바운더리
     # 아래는 오른쪽 바운더
     TREEHEIGHT = 100
     RCs = Stack(TREEHEIGHT)
-    tmp = root
-    if tmp.rightChild:
-        tmp = tmp.rightChild
-    elif tmp.leftChild:
-        tmp = tmp.leftChild
-    while not isLeaf(tmp):
+    tmp = root.rightChild
+    while tmp:
+        if isLeaf(tmp):
+            break
         RCs.push(tmp.value)
-        if tmp.rightChild:
-            tmp = tmp.rightChild
-        else: # not isLeaf이기 때문에 RC가 없으면 LC는 무조건 존재
-            tmp = tmp.leftChild
+        tmp = tmp.rightChild
     while not RCs.is_empty():
         print(RCs.pop(), end=' ')
     print()
@@ -111,7 +103,7 @@ def main():
     
     boundaryTraversal(r) 
     """
-    1 2 4 7
+    1 2 4 7 -> 이게 맞는듯
     1 2 4 7 5
     """
     
