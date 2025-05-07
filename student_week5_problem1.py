@@ -50,8 +50,12 @@ def boundaryTraversal(root):
     '''=======Student's code======='''
     if root is None:
         return
-    tmp = root
-    while tmp.leftChild:
+    if not isLeaf(root):
+        print(root.value, end=' ')
+    tmp = root.leftChild
+    while tmp:
+        if isLeaf(tmp):
+            break
         print(tmp.value, end=' ')
         tmp = tmp.leftChild
     # 위는 왼쪽 boundary
@@ -106,6 +110,23 @@ def main():
     1 2 4 7 -> 이게 맞는듯
     1 2 4 7 5
     """
+    
+    r1 = Node(1)
+    boundaryTraversal(r1) # 1
+    
+    #     1
+    #      \
+    #       2
+    #      / \
+    #     5   4
+    #   /
+    #   7
+    r1.rightChild = Node(2)
+    r1.rightChild.leftChild = Node(5)
+    r1.rightChild.rightChild = Node(4)
+    r1.rightChild.leftChild.leftChild = Node(7)
+    
+    boundaryTraversal(r1) # 1 7 4 2
     
 if __name__ == "__main__":
     main()
