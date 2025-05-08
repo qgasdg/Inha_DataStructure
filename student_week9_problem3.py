@@ -14,44 +14,28 @@ def print_linkedList(head):
 
 class MergeLinkedList:
     def __init__(self):
-        """=======Student's code======="""
         self.head = None
 
     def addList(self, head2):
-        """=======Student's code======="""
-        if head2 is None:
+        if head2 is None:               # 빈 리스트면 끝
             return
-        if self.head is None:
+        if self.head is None:           # 첫 번째 입력
             self.head = head2
             return
 
-        if self.head.data <= head2.data:
-            min_head = self.head
-            cur = self.head.next
-            cur2 = head2
-        else:
-            min_head = head2
-            cur = self.head
-            cur2 = head2.next
+        dummy = Node(0)                 # << 핵심: 더미 노드
+        tail = dummy
+        p1, p2 = self.head, head2
 
-        tmp = min_head
-
-        while cur and cur2:
-            if cur.data <= cur2.data:
-                tmp.next = cur
-                cur = cur.next
+        while p1 and p2:                # 두 리스트를 병합
+            if p1.data <= p2.data:
+                tail.next, p1 = p1, p1.next
             else:
-                tmp.next = cur2
-                cur2 = cur2.next
-            tmp = tmp.next
+                tail.next, p2 = p2, p2.next
+            tail = tail.next
 
-        # Attach any remaining element
-        if cur:
-            tmp.next = cur
-        else:
-            tmp.next = cur2
-
-        self.head = min_head
+        tail.next = p1 or p2            # 남은 쪽 전부 연결
+        self.head = dummy.next          # 새 머리 갱신
 
 
 def main():
