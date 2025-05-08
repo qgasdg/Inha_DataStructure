@@ -50,25 +50,27 @@ def boundaryTraversal(root):
     '''=======Student's code======='''
     if root is None:
         return
+
+    # 루트
     if not isLeaf(root):
         print(root.value, end=' ')
+
+    # 왼쪽
     tmp = root.leftChild
-    while tmp:
-        if isLeaf(tmp):
-            break
+    while tmp and not isLeaf(tmp):
         print(tmp.value, end=' ')
-        tmp = tmp.leftChild
-    # 위는 왼쪽 boundary
-    printLeaves(root) # 리프 바운더리
-    # 아래는 오른쪽 바운더
+        tmp = tmp.leftChild if tmp.leftChild else tmp.rightChild
+
+    # 리프
+    printLeaves(root)
+
+    # 오른쪽
     TREEHEIGHT = 100
     RCs = Stack(TREEHEIGHT)
     tmp = root.rightChild
-    while tmp:
-        if isLeaf(tmp):
-            break
+    while tmp and not isLeaf(tmp):
         RCs.push(tmp.value)
-        tmp = tmp.rightChild
+        tmp = tmp.rightChild if tmp.rightChild else tmp.leftChild
     while not RCs.is_empty():
         print(RCs.pop(), end=' ')
     print()
