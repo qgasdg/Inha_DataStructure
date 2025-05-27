@@ -10,22 +10,20 @@ class Kth_largest:
         self.k = 0
 
     def findKthLargest(self, k, m, nums: array.array):
-        """=======Student's code======="""
-        # 1) k, size 초기화
-        self.k = k
-        # 첫 k개(또는 nums 전체 개수)만 heap에 담고
-        if m < k:
-            self.size = m
-        else:
-            self.size = k
-        for i in range(self.size):
+        # Copy the values from nums to the array
+        for i in range(m):
             self.array[i] = nums[i]
-        # 2) min-heap으로 heapify
-        for i in range((self.size - 1) // 2, -1, -1):
+        """=======Student's code======="""
+        self.k = k
+        self.size = k  # 힙의 크기는 k개로 제한
+
+        # 먼저 앞의 k개만 가지고 min-heap을 만든다
+        for i in range((self.k - 1) // 2, -1, -1):
             self.downHeap(i)
-        # 3) 나머지 원소들은 add()로 처리
-        for i in range(self.size, m):
-            self.add(nums[i])
+	
+        # 나머지 값들을 하나씩 add()로 처리
+        for i in range(k, m):
+            self.add(self.array[i])
 
     def add(self, item):
         """=======Student's code======="""
