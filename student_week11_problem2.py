@@ -54,29 +54,30 @@ class HashMap:
 class checker:
     def canArray(self, arr: array.array, n, k):
         """=======Student's code======="""
-        if n % 2 != 0:  # Array length must be even
+        if n % 2 != 0:  # Array length must be even : 배열 크기는 짝수여야 한다.
             return False
 
-        # Create HashMap to store remainder counts
+        # Create HashMap to store remainder counts : 나머지를 세기 위한 해시맵을 만든다.
         hmap = HashMap(n, k)
 
-        # Count remainders
+        # Count remainders : 나머지를 센다.
         for num in arr:
             rem = num % k
             hmap.putitem(rem, num)
 
-        # Check if we can pair numbers
+        # Check if we can pair numbers : 수들을 짝 지을 수 있는지 확인한다.
         for i in range(k):
             if i == 0:
-                # Numbers divisible by k should be even
+                # Numbers divisible by k should be even : k로 나누어 떨어지는 수의 개수는 짝수여야한다.
                 if hmap.getCount(0) % 2 != 0:
                     return False
             elif i * 2 == k:
-                # Numbers with remainder k/2 should be even
+                # Numbers with remainder k/2 should be even : k/2인 애들은 짝수여야한다.
                 if hmap.getCount(i) % 2 != 0:
                     return False
             else:
-                # Check if count of remainder i equals count of remainder k-i
+                # Check if count of remainder i equals count of remainder k-i :
+                # 나머지가 i인 수와 k - i인 수의 개수가 같은지 확인한다.
                 if hmap.getCount(i) != hmap.getCount(k - i):
                     return False
 

@@ -2,3 +2,4 @@ test.py
 venv/
 *.pyc
 __pycache__/
+another/
