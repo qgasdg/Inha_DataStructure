@@ -16,11 +16,13 @@ class Kth_largest:
         """=======Student's code======="""
         self.k = k
         self.size = k  # 힙의 크기는 k개로 제한
+        if m < k:
+            self.size = m  # 만약 m이 k보다 작으면 m개로 제한
 
         # 먼저 앞의 k개만 가지고 min-heap을 만든다
         for i in range((self.k - 1) // 2, -1, -1):
             self.downHeap(i)
-	
+
         # 나머지 값들을 하나씩 add()로 처리
         for i in range(k, m):
             self.add(self.array[i])
