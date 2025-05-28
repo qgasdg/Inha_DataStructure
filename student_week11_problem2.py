@@ -21,8 +21,7 @@ class HashMap:
         """=======Student's code======="""
         self.n = n
         self.k = k
-        self.table = [None] * n
-        self.count = [0] * k  # Count for each remainder
+        self.table = np.empty(n, dtype=Item)
 
     def hash(self, key):
         """=======Student's code======="""
@@ -39,7 +38,6 @@ class HashMap:
                 or self.table[position].exists != Exists.EXISTS
             ):
                 self.table[position] = Item(key, value)
-                self.count[key] += 1
                 return True
 
             position = (position + 1) % self.n
@@ -48,7 +46,24 @@ class HashMap:
 
     def getCount(self, key):
         """=======Student's code======="""
-        return self.count[key]
+        cnt = 0
+        initial_position = self.hash(key)
+        position = initial_position
+        while True:
+            if (
+                self.table[position] is None
+                or self.table[position].exists != Exists.EXISTS
+            ):
+                break
+            elif self.table[position].value % self.k == key:
+                cnt += 1
+
+            position = (position + 1) % self.n
+
+            if position == initial_position:
+                break
+
+        return cnt
 
 
 class checker:
