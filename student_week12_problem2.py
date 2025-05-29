@@ -87,9 +87,8 @@ class IntervalMerger:
             # If current interval overlaps with previous
             if self.array[merged_index].end >= self.array[i].start:
                 # Update end of merged interval if needed
-                self.array[merged_index].end = max(
-                    self.array[merged_index].end, self.array[i].end
-                )
+                if self.array[merged_index].end < self.array[i].end:
+                    self.array[merged_index].end = self.array[i].end
             else:
                 # No overlap, move to next position
                 merged_index += 1
@@ -109,6 +108,11 @@ def main():
     merger.intervalMerge()
     merger.print()  # [1, 6] [8, 10] [15, 18]
 
+    merger2 = IntervalMerger()
+    merger2.add(1, 4)
+    merger2.add(4, 5)
+    merger2.intervalMerge()
+    merger2.print() # [1, 5]
 
 if __name__ == "__main__":
     main()
