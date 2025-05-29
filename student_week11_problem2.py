@@ -21,49 +21,27 @@ class HashMap:
         """=======Student's code======="""
         self.n = n
         self.k = k
-        self.table = np.empty(n, dtype=Item)
+        self.table = np.empty(k, dtype=Item)
 
     def hash(self, key):
         """=======Student's code======="""
-        return key % self.n
+        return key % self.k
 
     def putitem(self, key, value):
         """=======Student's code======="""
-        initial_position = self.hash(key)
-        position = initial_position
-
-        while True:
-            if (
-                self.table[position] is None
-                or self.table[position].exists != Exists.EXISTS
-            ):
-                self.table[position] = Item(key, value)
-                return True
-
-            position = (position + 1) % self.n
-            if position == initial_position:
-                return False
+        position = self.hash(key)
+        if self.table[position] is None or self.table[position].exists != Exists.EXISTS:
+            self.table[position] = Item(key, 1)
+        else:
+            self.table[position].value += 1
 
     def getCount(self, key):
         """=======Student's code======="""
-        cnt = 0
-        initial_position = self.hash(key)
-        position = initial_position
-        while True:
-            if (
-                self.table[position] is None
-                or self.table[position].exists != Exists.EXISTS
-            ):
-                break
-            elif self.table[position].value % self.k == key:
-                cnt += 1
-
-            position = (position + 1) % self.n
-
-            if position == initial_position:
-                break
-
-        return cnt
+        position = self.hash(key)
+        if self.table[position] is None or self.table[position].exists != Exists.EXISTS:
+            return 0
+        else:
+            return self.table[position].value
 
 
 class checker:
