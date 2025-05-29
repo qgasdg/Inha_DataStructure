@@ -92,6 +92,14 @@ def main():
     print(kth2.add(9))  # 7
     print(kth2.add(9))  # 8
 
+    print("3rd test") # k > m
+    kth3 = Kth_largest()
+    nums3 = array.array('h', [3, 5])
+    kth3.findKthLargest(4, len(nums3), nums3)
+    print(kth3.add(1)) # 1
+    print(kth3.add(2)) # 1
+    print(kth3.add(9)) # 2
+
 
 if __name__ == "__main__":
     main()
