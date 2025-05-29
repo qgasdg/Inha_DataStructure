@@ -54,11 +54,13 @@ class LargestNumber:
 
         # Handle case where all numbers are 0
         if self.array[0] == 0:
-            return "0"
+            return 0
 
         # Concatenate numbers to form result
-        result = "".join(map(str, self.array))
-        return result
+        result = ""
+        for nums in self.array:
+            result += str(nums)
+        return int(result)
 
 
 def main():
@@ -66,11 +68,13 @@ def main():
     arr = array.array("h", [3, 30, 34, 5, 9])
     largestNumber = LargestNumber(arr, n)
     print(largestNumber.largestNumber())  # 9534330
+    print(type(largestNumber.largestNumber()))
 
     n = 3
     arr = array.array("h", [0, 0, 0])
     largestNumber = LargestNumber(arr, n)
     print(largestNumber.largestNumber())  # 0
+    print(type(largestNumber.largestNumber()))
 
 
 if __name__ == "__main__":
