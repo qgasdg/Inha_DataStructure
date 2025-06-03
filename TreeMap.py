@@ -22,7 +22,7 @@ class TreeMap(LinkedBinaryTree, MapBase):
         else:
             if self.right(p) is not None:
                 return self._subtree_search(self.right(p), k)
-        return p
+        return p # key가 존재하지 않을 때
 
     def _subtree_first_position(self, p):
         walk = p
